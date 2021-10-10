@@ -8,6 +8,6 @@ In order to have a clearer view of the RESTful service and the endpoints that ex
 The document is a json and is located on the project directory and can be easily viewed by using the online editor https://editor.swagger.io/
 
 In order to run the application download the project and run on a IDE like Visual Studio Code or Visual Studio and execute the following commands: 
-dotnet clean
-dotnet build
-dotnet run
+- dotnet clean
+- dotnet build
+- dotnet run
