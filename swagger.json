@@ -1,0 +1,524 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Match Manager API",
+    "description": "API for managing odds regarding football and basketball matches",
+    "version": "V1"
+  },
+  "paths": {
+    "/api/Matches": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Returns all the available matches",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Match"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matches/{id}": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Returns a match",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the requested match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "In case the match does not exist"
+          }
+        }
+      }
+    },
+    "/api/Matches/add-new-match": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Adds a new match",
+        "description": "Sample request data: \r\n{   \r\n    \"description\": \"Real Madrid Barcelona Basketball Match\", \r\n    \"matchDate\" : \"2021-10-01\", \r\n    \"matchTime\": \"21:30:00\", \r\n    \"teamA\": \"Real Madrid\",\r\n    \"teamB\": \"Barcelona\",\r\n    \"sport\": 2 \r\n}",
+        "requestBody": {
+          "description": "Match data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns success message"
+          },
+          "400": {
+            "description": "In case something went wrong during insertion"
+          }
+        }
+      }
+    },
+    "/api/Matches/update-match/{id}": {
+      "put": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Update an existing match",
+        "description": "Sample request data: \r\n{   \r\n    \"id\": 2,\r\n    \"description\": \"Real Madrid Barcelona Basketball Match\", \r\n    \"matchDate\" : \"2021-10-01\", \r\n    \"matchTime\": \"21:30:00\", \r\n    \"teamA\": \"Real Madrid\",\r\n    \"teamB\": \"Barcelona\",\r\n    \"sport\": 2 \r\n}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Match"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns success message"
+          },
+          "400": {
+            "description": "In case something went wrong during insertion"
+          }
+        }
+      }
+    },
+    "/api/Matches/delete-match/{id}": {
+      "delete": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Deletes an existing match",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns success message"
+          },
+          "400": {
+            "description": "In case something went wrong during delete"
+          }
+        }
+      }
+    },
+    "/api/Matches/matches-odds": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Returns all the available odds of all matches",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchOdds"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matches/matches-odds/{id}": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Returns a match odd",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the requested match odd",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchOdds"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "In case the match odd does not exist"
+          }
+        }
+      }
+    },
+    "/api/Matches/{id}/match-odds": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Returns the match odds of a match",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the match odds of a match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchOdds"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "In case the match does not exist"
+          }
+        }
+      }
+    },
+    "/api/Matches/add-new-match-odd": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Adds a new match odd",
+        "description": "Sample request data: \r\n{   \r\n    \"matchId\": 1, \r\n    \"specifier\" : \"1\", \r\n    \"odd\": 1.25\r\n}",
+        "requestBody": {
+          "description": "Match Odd data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the requested match"
+          },
+          "400": {
+            "description": "In case something went wrong during insertion"
+          }
+        }
+      }
+    },
+    "/api/Matches/update-match-odd/{id}": {
+      "put": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Update an existing match odd",
+        "description": "Sample request data: \r\n\r\nURI Parameter: 1 (Match Odd Id)\r\n            \r\n{   \r\n    \"id\": 1\r\n    \"matchId\": 1, \r\n    \"specifier\" : \"1\", \r\n    \"odd\": 1.25\r\n}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchOdds"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns success message"
+          },
+          "400": {
+            "description": "In case something went wrong during update"
+          }
+        }
+      }
+    },
+    "/api/Matches/delete-match-odd/{id}": {
+      "delete": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Deletes an existing match odd",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns success message"
+          },
+          "400": {
+            "description": "In case something went wrong during delete"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Match": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Primary key of Match entity.\r\nWe do not need to specify it with an annotation as EF core by default checks for property named ID \r\nand declares it as primary key",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of Match",
+            "nullable": true
+          },
+          "matchDate": {
+            "type": "string",
+            "description": "Date of Match. Since we need to store only the Date in the database, we take only the date part.",
+            "format": "date-time"
+          },
+          "matchTime": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "teamA": {
+            "type": "string",
+            "description": "TeamA of Match",
+            "nullable": true
+          },
+          "teamB": {
+            "type": "string",
+            "description": "TeamB of Match",
+            "nullable": true
+          },
+          "sport": {
+            "$ref": "#/components/schemas/Sport"
+          },
+          "matchOdds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MatchOdds"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MatchOdds": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Primary key of Match Odds entity.\r\nWe do not need to specify it with an annotation as EF core by default checks for property named ID \r\nand declares it as primary key",
+            "format": "int32"
+          },
+          "matchId": {
+            "type": "integer",
+            "description": "Foreign key of Match Odds entity. Points to Match entity\r\nThe declararion takes place during Data Context.",
+            "format": "int32"
+          },
+          "specifier": {
+            "type": "string",
+            "description": "Specifier of the Odd. Can be 1, 2 or X",
+            "nullable": true
+          },
+          "odd": {
+            "type": "number",
+            "description": "Odd value.",
+            "format": "float"
+          },
+          "match": {
+            "$ref": "#/components/schemas/Match"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Sport": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "Enum for Sports. Each match can be either Football or Basketball",
+        "format": "int32"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
