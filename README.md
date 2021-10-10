@@ -11,3 +11,6 @@ In order to run the application download the project and run on a IDE like Visua
 - dotnet clean
 - dotnet build
 - dotnet run
+
+or use the executable file **MatchManagerApi.exe** contained in the ZIP file I have attached in the email. 
+In any of the abovementioned cases, don't forget to change the connection string mentioned in appsettings.Development.json and appsettings.json, so that the web service points to the requested database. 
