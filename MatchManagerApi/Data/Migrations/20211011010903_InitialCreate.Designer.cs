@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchManagerApi.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211010140635_InitialCreate")]
+    [Migration("20211011010903_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,8 @@ namespace MatchManagerApi.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("MatchDate")
+                    b.Property<DateTime?>("MatchDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<TimeSpan?>("MatchTime")
@@ -41,9 +42,11 @@ namespace MatchManagerApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TeamA")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeamB")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

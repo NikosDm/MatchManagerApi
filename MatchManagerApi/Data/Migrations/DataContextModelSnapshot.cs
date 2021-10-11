@@ -29,7 +29,8 @@ namespace MatchManagerApi.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("MatchDate")
+                    b.Property<DateTime?>("MatchDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<TimeSpan?>("MatchTime")
@@ -39,9 +40,11 @@ namespace MatchManagerApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TeamA")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeamB")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

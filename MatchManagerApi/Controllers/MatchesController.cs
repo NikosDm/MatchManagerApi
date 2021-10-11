@@ -57,8 +57,7 @@ namespace MatchManagerApi.Controllers
         /// Sample request data: 
         /// {   
         ///     "description": "Real Madrid Barcelona Basketball Match", 
-        ///     "matchDate" : "2021-10-01", 
-        ///     "matchTime": "21:30:00", 
+        ///     "matchDate" : "2021-10-01T21:30:00",
         ///     "teamA": "Real Madrid",
         ///     "teamB": "Barcelona",
         ///     "sport": 2 
@@ -66,7 +65,7 @@ namespace MatchManagerApi.Controllers
         ///
         /// </remarks>
         /// <response code="200">Returns success message</response>
-        /// <response code="400">In case something went wrong during insertion</response>
+        /// <response code="400">In case something went wrong during insertion or the data that were sent are invalid</response>
         [HttpPost("add-new-match")]
         public async Task<ActionResult> AddNewMatch(Match match)
         {
@@ -92,8 +91,7 @@ namespace MatchManagerApi.Controllers
         /// {   
         ///     "id": 2,
         ///     "description": "Real Madrid Barcelona Basketball Match", 
-        ///     "matchDate" : "2021-10-01", 
-        ///     "matchTime": "21:30:00", 
+        ///     "matchDate" : "2021-10-01T21:30:00",
         ///     "teamA": "Real Madrid",
         ///     "teamB": "Barcelona",
         ///     "sport": 2 
@@ -101,7 +99,7 @@ namespace MatchManagerApi.Controllers
         ///
         /// </remarks>
         /// <response code="200">Returns success message</response>
-        /// <response code="400">In case something went wrong during insertion</response>
+        /// <response code="400">In case something went wrong during update</response>
         [HttpPut("update-match/{id}")]
         public async Task<ActionResult> UpdateMatch(int id, Match match)
         {
@@ -200,7 +198,7 @@ namespace MatchManagerApi.Controllers
         ///
         /// </remarks>
         /// <response code="200">Returns the requested match</response>
-        /// <response code="400">In case something went wrong during insertion</response>
+        /// <response code="400">In case something went wrong during insertion or the data that were sent are invalid</response>
         [HttpPost("add-new-match-odd")]
         public async Task<ActionResult> AddNewMatchOdd(MatchOdds matchOdd)
         {

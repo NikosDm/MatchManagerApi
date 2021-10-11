@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MatchManagerApi.Entities
 {
     public class MatchOdds
@@ -16,10 +18,13 @@ namespace MatchManagerApi.Entities
         /// <summary>
         /// Specifier of the Odd. Can be 1, 2 or X
         /// </summary>
+        [Required]
+        [RegularExpression("1|X|2", ErrorMessage = "Only 1, X or 2 is allowed for Specifier")]
         public string Specifier { get; set; }
         /// <summary>
         /// Odd value.
         /// </summary>
+        [Required]
         public float Odd { get; set; }
 
         public Match Match { get; set; }

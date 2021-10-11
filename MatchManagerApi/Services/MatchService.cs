@@ -24,6 +24,9 @@ namespace MatchManagerApi.Services
         {
             try 
             {
+                if ((int)match.Sport != 1 && (int)match.Sport != 2)
+                    return false;
+
                 await _context.Matches.AddAsync(match);
 
                 return await SaveAllAsync();
@@ -126,11 +129,11 @@ namespace MatchManagerApi.Services
                 if (curMatch == null || match.ID != matchID) return false;
 
                 curMatch.Description = match.Description;
-                curMatch.MatchTime = match.MatchTime;
-                curMatch.MatchDate = match.MatchDate;
-                curMatch.TeamA = match.TeamA;
-                curMatch.TeamB = match.TeamB;
-                curMatch.Sport = match.Sport;
+                curMatch.MatchDate = match.MatchDate ?? curMatch.MatchDate;
+                curMatch.MatchTime = match.MatchTime ?? curMatch.MatchTime;
+                curMatch.TeamA = string.IsNullOrWhiteSpace(match.TeamA) ? curMatch.TeamA : match.TeamA;
+                curMatch.TeamB = string.IsNullOrWhiteSpace(match.TeamB) ? curMatch.TeamB : match.TeamB;
+                curMatch.Sport = (int)match.Sport != 1 && (int)match.Sport != 2 ? curMatch.Sport : match.Sport; 
 
                 _context.Matches.Update(curMatch);
 

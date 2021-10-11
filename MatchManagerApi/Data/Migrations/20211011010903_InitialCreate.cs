@@ -16,8 +16,8 @@ namespace MatchManagerApi.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     MatchDate = table.Column<DateTime>(nullable: false),
                     MatchTime = table.Column<TimeSpan>(nullable: true),
-                    TeamA = table.Column<string>(nullable: true),
-                    TeamB = table.Column<string>(nullable: true),
+                    TeamA = table.Column<string>(nullable: false),
+                    TeamB = table.Column<string>(nullable: false),
                     Sport = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

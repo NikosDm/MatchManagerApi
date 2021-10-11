@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MatchManagerApi.Entities
 {
@@ -14,20 +15,12 @@ namespace MatchManagerApi.Entities
 
     public class Match
     {
-        /// <summary>
-        /// Date and time of the match. 
-        /// In case the user passes the date time of the match as a whole, 
-        /// we store the value in this property and 
-        /// </summary>
-        private DateTime _matchDateTime;
-        /// <summary>
-        /// Contains the date of the match and it is the final value that MatchDate property receives.
-        /// </summary>
-        private DateTime _matchDate;
-        /// <summary>
-        /// Contains the time of the match and it is the final value that MatchTime property receives.
-        /// </summary>
+        private DateTime? _matchDateTime;
+        private DateTime? _matchDate;
         private TimeSpan? _matchTime;
+        private string _description;
+        private string _teamA;
+        private string _teamB;
         /// <summary>
         /// Primary key of Match entity.
         /// We do not need to specify it with an annotation as EF core by default checks for property named ID 
@@ -37,21 +30,40 @@ namespace MatchManagerApi.Entities
         /// <summary>
         /// Description of Match
         /// </summary>
-        public string Description { get; set; }
+        public string Description 
+        { 
+            get { return _description; } 
+            set 
+            { 
+                if (string.IsNullOrWhiteSpace(value))
+                    _description = string.Concat(_teamA,"-",_teamB);
+                else 
+                    _description = value;
+            } 
+        }
         /// <summary>
         /// Date of Match. Since we need to store only the Date in the database, we take only the date part. 
         /// </summary>
-        public DateTime MatchDate 
+        [Required]
+        public DateTime? MatchDate 
         { 
             get { return _matchDate; } 
             set 
             { 
-                _matchDateTime = value;
-                _matchDate = _matchDateTime.Date;
+                if (value.HasValue) 
+                {
+                    _matchDateTime = value.Value;
+                    _matchDate = _matchDateTime.Value.Date;
+
+                    if (!MatchTime.HasValue) 
+                        MatchTime = _matchDateTime.Value.TimeOfDay;
+                }
             } 
         }
         /// <summary>
-        /// Time of Match. In case it is not provided, we try to fetch it from the date time property _matchDateTime
+        /// Time of Match. 
+        /// Since JSON deserialization is not supported for TimeSpan value type, 
+        /// the value is taken from Match Date.
         /// </summary>
         public TimeSpan? MatchTime 
         {   
@@ -59,7 +71,7 @@ namespace MatchManagerApi.Entities
             set 
             {
                 if (value == null) 
-                    _matchTime = _matchDateTime.TimeOfDay; 
+                    _matchTime = _matchDateTime.Value.TimeOfDay; 
                 else 
                     _matchTime = value;
             }
@@ -67,11 +79,37 @@ namespace MatchManagerApi.Entities
         /// <summary>
         /// TeamA of Match
         /// </summary>
-        public string TeamA { get; set; }
+        [Required]
+        public string TeamA 
+        { 
+            get { return _teamA; } 
+            set 
+            { 
+                _teamA = value; 
+
+                if (string.IsNullOrWhiteSpace(_description) && !string.IsNullOrWhiteSpace(_teamB)) 
+                {
+                    Description = "";
+                }
+            } 
+        }
         /// <summary>
         /// TeamB of Match
         /// </summary>
-        public string TeamB { get; set; }
+        [Required]
+        public string TeamB  
+        { 
+            get { return _teamB; } 
+            set 
+            { 
+                _teamB = value; 
+
+                if (string.IsNullOrWhiteSpace(_description) && !string.IsNullOrWhiteSpace(_teamA)) 
+                {
+                    Description = "";
+                }
+            } 
+        }
         /// <summary>
         /// Sport. Can be either Football or match. 
         /// </summary>
